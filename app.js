@@ -1,7 +1,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -62,23 +61,7 @@ const corsOptions = {
 
 
 // Set up route to proxy the NSE India API request
-app.get('/', cors(corsOptions), async (req, res) => {
-    try {
 
-        fs.readFile('data.json', 'utf8', (err, data) => {
-            if (err) {
-                console.error('Error reading file:', err);
-                return;
-            }
-        console.log('File read successfully');
-            res.send(data);
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal s by ud erver error' });
-    }
-});
 async function myfun() {
     try {
         const response = await fetch(`https://www.nseindia.com/api/option-chain-indices?symbol=${symbol}`);
@@ -386,15 +369,7 @@ async function myfun() {
 
 
 
-            finaldata = JSON.stringify(mapdata);
-            fs.writeFile('data.json', finaldata, 'utf8', (err) => {
-                if (err) {
-                    console.error('Error writing to file:', err);
-                    return;
-                }
-                console.log('Data has been written to file.');
-            });
-
+            
             //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
