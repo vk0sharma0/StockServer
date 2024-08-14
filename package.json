@@ -2,9 +2,9 @@
   "name": "nse-server",
   "version": "1.0.0",
   "description": "this is server setup to retrive data from nse and send api data",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "vishal",
