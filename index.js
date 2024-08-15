@@ -388,7 +388,7 @@ async function myfun() {
 
 //setting up response to request 
 
-app.get('/', async (req, res) => {
+app.get('/data', async (req, res) => {
     try {
         
 
@@ -399,7 +399,14 @@ app.get('/', async (req, res) => {
     }
 });
 
-
+app.get('/', async (req, res) => {
+    try{
+        res.send("server is running.......");
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 setInterval(() => {
 
