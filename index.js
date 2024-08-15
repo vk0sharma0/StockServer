@@ -2,6 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 let time = 0;
@@ -73,7 +74,7 @@ async function myfun() {
         console.log(`symbol=${symbol}`)
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        setTimeout(() => {
+       if(jsonData){
 
 
             symbol = jsonData.filtered.data[1].PE.underlying;
@@ -375,9 +376,9 @@ async function myfun() {
 
 
 
-        }, 1000);
+        };
 
-    } catch (error) {
+    } catch (error)         {
         console.error('Error fetching data:', error);
     };
 
