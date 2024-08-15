@@ -48,6 +48,7 @@ let jsonData;
 let finaldata;
 let z = true;
 let abc = 0;
+let mapdata;
 
 
 
@@ -335,7 +336,7 @@ async function myfun() {
                 
             
 
-            let mapdata =
+             mapdata =
             {
                 "data": {
                     "time": time,
@@ -383,6 +384,22 @@ async function myfun() {
 
 
 }
+
+
+//setting up response to request 
+
+app.get('/', async (req, res) => {
+    try {
+        
+
+        res.send(mapdata);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 
 setInterval(() => {
 
