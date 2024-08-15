@@ -79,7 +79,7 @@ const instance = axios.create({
   timeout: 5000, // 5 seconds timeout
 });
 
-instance.get('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY')
+await instance.get('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY')
   .then(response => {
       jsonData=response.data;
     console.log("success");
