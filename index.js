@@ -70,34 +70,9 @@ app.use(cors(corsOptions));
 
 async function myfun() {
     try {
-       // const response = await axios.get(`https://www.nseindia.com/api/option-chain-indices?symbol=${symbol}`);
-//jsonData = response.data;
+       const response = await axios.get(`https://www.nseindia.com/api/option-chain-indices?symbol=${symbol}`);
+        jsonData = response.data;
 
-
-
-const instance = axios.create({
-  timeout: 5000, // 5 seconds timeout
-});
-
-await instance.get('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY')
-  .then(response => {
-      jsonData=response.data;
-    console.log("success");
-  })
-  .catch(error => {
-    if (error.code === 'ETIMEDOUT') {
-      console.error('Request timed out');
-    } else {
-      console.error('Error fetching data:', error.message);
-    }
-  });
-        
-
-
-
-
-
-        
         console.log(jsonData.records.timestamp);
         console.log(`symbol=${symbol}`)
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
