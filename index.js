@@ -66,9 +66,16 @@ app.use(cors(corsOptions));
 
 async function myfun() {
     try {
-        const response = await fetch(`https://www.nseindia.com/api/option-chain-indices?symbol=${symbol}`);
+        const response = await fetch(`https://www.nseindia.com/api/option-chain-indices?symbol=${symbol}`, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                'Accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Connection': 'keep-alive',
+            }
+        } );
         const data = await response.text();
-        jsonData = JSON.parse(data);
+jsonData = JSON.parse(data);
 
         console.log(jsonData.records.timestamp);
         console.log(`symbol=${symbol}`)
