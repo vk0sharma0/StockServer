@@ -1,62 +1,44 @@
-
-const express = require('express');
-const cors = require('cors');
 const axios = require('axios');
-const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Set up CORS options
-const corsOptions = {
-    origin: '*',
-    methods: 'GET',
-    allowedHeaders: 'Content-Type',
-};
+// Configuration for the Axios instance
+const axiosInstance = axios.create({
+    baseURL: 'https://www.nseindia.com',
+    timeout: 10000, // Set a timeout to prevent hanging requests
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+        'Accept-Encoding': 'gzip, compress, deflate, br'
+    },
+    maxRedirects: 5, // Limit redirects
+});
 
-app.use(cors(corsOptions));
-
-let jsonData = {};  // Variable to store the fetched data
-
-async function myfun() {
+// Function to fetch data
+async function fetchData() {
     try {
-        const response = await axios.get(`https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY`, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-            }
-        });
-        jsonData = response.data;
-
-        console.log(jsonData.records.timestamp);
+        const response = await axiosInstance.get('/api/option-chain-indices?symbol=NIFTY');
+        console.log('Data fetched successfully:', response.data);
+        return response.data;
     } catch (error) {
-        console.error('Error fetching data:', error);
+        if (error.code === 'ECONNRESET') {
+            console.error('Connection reset by peer:', error.message);
+        } else if (error.code === 'ECONNABORTED') {
+            console.error('Request timeout:', error.message);
+        } else if (error.response) {
+            console.error('Error response from the server:', error.response.status, error.response.statusText);
+        } else {
+            console.error('Error fetching data:', error.message);
+        }
     }
 }
 
-// Define the route to get the data
-app.get('/data', async (req, res) => {
-    try {
-        res.send(jsonData);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
-// Define the root route
-app.get('/', (req, res) => {
-    try {
-        res.send("Server is running.......");
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
-// Set interval to fetch data every 10 seconds
-setInterval(() => {
-    myfun();
-}, 10000);
+// Call the fetchData function
+fetchData();
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+const port = process.env.PORT || 7953;
+const server = require('http').createServer();
+
+server.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
 });
+
