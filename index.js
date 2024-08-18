@@ -3,7 +3,7 @@ const axios = require('axios');
 // Configuration for the Axios instance
 const axiosInstance = axios.create({
     baseURL: 'https://www.nseindia.com',
-    timeout: 60000, // Set a timeout to prevent hanging requests
+    timeout: 10000, // Set a timeout to prevent hanging requests
     headers: {
         'Accept': 'application/json, text/plain, */*',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
