@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Endpoint to fetch data from NSE Option Chain API
-app.get('/nse-option-chain', async (req, res) => {
+app.get('', async (req, res) => {
     try {
         const response = await axios.get('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY', {
             headers: {
