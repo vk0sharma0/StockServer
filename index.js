@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
 // Function to fetch data
 async function fetchData() {
     try {
-        const response = await axiosInstance.get('/api/option-chain-indices?symbol=NIFTY');
+        const response = await axiosInstance.get('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY');
         console.log('Data fetched successfully:', response.data);
         return response.data;
     } catch (error) {
