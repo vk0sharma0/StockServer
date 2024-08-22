@@ -28,8 +28,6 @@ async function fetchDataWithRetry(url, retries = 3) {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
                 'Accept-Encoding': 'gzip',
                 'Content-Type': 'application/json; charset=utf-8',
-                // Add any other necessary headers here
-                // For example: 'X-Firefox-Spdy': 'h2'
             }
         });
         return response.data;
@@ -45,7 +43,10 @@ async function fetchDataWithRetry(url, retries = 3) {
 
 async function myfun() {
     try {
-        const data = await fetchDataWithRetry('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY');
+        // Using CORS Anywhere proxy
+        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+        const targetUrl = 'https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY';
+        const data = await fetchDataWithRetry(proxyUrl + targetUrl);
         jsonData = data;
         console.log(jsonData.records.timestamp);
     } catch (error) {
