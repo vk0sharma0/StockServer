@@ -102,7 +102,7 @@ async function myfun() {
         console.log(`symbol=${symbol}`)
         //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        setTimeout(() => {
+        if(jsonData){
 
 
             symbol = jsonData.filtered.data[1].PE.underlying;
@@ -145,7 +145,7 @@ async function myfun() {
                 if ((tot_call_volume - a) == 0) {
                     history_tot_call_volume_diff.push(0);
 
-                }else if(tot_call_volume - a) {                tot_call_volume_diff = tot_call_volume - a;
+                }else if((tot_call_volume - a) !=0){                tot_call_volume_diff = tot_call_volume - a;
                     history_tot_call_volume_diff.push(tot_call_volume_diff);
                     a = tot_call_volume;}
                     if (z) {
@@ -412,7 +412,7 @@ async function myfun() {
 
 
 
-        }, 1000);
+        };
 
     } catch (error) {
         console.error('Error fetching data:', error);
