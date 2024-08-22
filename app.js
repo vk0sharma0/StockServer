@@ -96,7 +96,7 @@ async function myfun() {
 }}
 );
         const data = await response.text();
-        jsonData = JSON.parse(data);
+        jsonData = await JSON.parse(data);
 
         console.log(jsonData.records.timestamp);
         console.log(`symbol=${symbol}`)
