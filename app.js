@@ -25,25 +25,17 @@ async function fetchDataWithRetry(url, retries = 3) {
     try {
         const response = await axiosInstance.get(url, {
             headers: {
-                X-Firefox-Spdy: h2
-access-control-allow-headers: Content-Type
-access-control-allow-methods: GET,POST
-access-control-allow-origin: beta.nseindia.com, nseindia.com
-content-encoding: gzip
-content-length: 91313
-content-security-policy: font-src *; default-src 'self' *; img-src * data: https://www.google.co.in https://www.google-analytics.com www.google-analytics.com https://nse-widget.interface.ai; style-src * 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.youtube.com *.gstatic.com https://www.google.com/ *.cloudflare.com *.googletagmanager.com *.highcharts.com *.go-mpulse.net https://stats.g.doubleclick.net/ https://www.google.com/ *.doubleclick.net https://nse-uat-widget.interface.ai/widget-loader.js www.google-analytics.com *.g.doubleclick.net/ https://analytics.google.com/ https://nse-widget.interface.ai
-content-type: application/json; charset=utf-8
-date: Thu, 22 Aug 2024 08:48:13 GMT
-link: <https://www.nseindia.com/assets/webfonts/fa-brands-400.woff2>;rel="preload";as="font";type="font/woff2";crossorigin,<https://www.nseindia.com/assets/webfonts/fa-solid-900.woff2>;rel="preload";as="font";type="font/woff2";crossorigin
-server: Apache
-server-timing: cdn-cache; desc=HIT, edge; dur=27, origin; dur=0, ak_p; desc="1724316493676_399044316_159647767_2744_18309_36_56_41";dur=1
-strict-transport-security: max-age=31536000 ; includeSubDomains ; preload
-vary: Accept-Encoding
-x-content-type-options: nosniff
-x-dns-prefetch-control: off
-x-download-options: noopen
-x-frame-options: SAMEORIGIN
-x-xss-protection: 1; mode=block
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.5',
+                'Connection': 'keep-alive',
+                'Host': 'www.nseindia.com',
+                'Sec-Fetch-Dest': 'document',
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'cross-site',
+                'Sec-Fetch-User': '?1',
+                'Upgrade-Insecure-Requests': '1',
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/113.0',
             }
         });
         return response.data;
