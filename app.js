@@ -15,17 +15,21 @@ app.use(cors(corsOptions));
 
 let jsonData = {};  // Variable to store the fetched data
 
-// Configure axios with a timeout and retry mechanism
+// Configure axios with a timeout
 const axiosInstance = axios.create({
     timeout: 5000, // Timeout after 5 seconds
 });
 
-// Function to fetch data with retries
+// Function to fetch data with retries and specific headers
 async function fetchDataWithRetry(url, retries = 3) {
     try {
         const response = await axiosInstance.get(url, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                'Accept-Encoding': 'gzip',
+                'Content-Type': 'application/json; charset=utf-8',
+                // Add any other necessary headers here
+                // For example: 'X-Firefox-Spdy': 'h2'
             }
         });
         return response.data;
