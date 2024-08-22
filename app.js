@@ -1,11 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-// Set up CORS options
+// Set up CORS options (allow any origin for this server)
 const corsOptions = {
     origin: '*',
     methods: 'GET',
@@ -16,12 +15,9 @@ app.use(cors(corsOptions));
 
 let jsonData = {};  // Variable to store the fetched data
 
-// Configure axios with a timeout and disabled SSL verification
+// Configure axios with a timeout
 const axiosInstance = axios.create({
     timeout: 5000, // Timeout after 5 seconds
-    httpsAgent: new https.Agent({  
-        rejectUnauthorized: false 
-    })
 });
 
 // Function to fetch data with retries and specific headers
@@ -55,10 +51,8 @@ async function fetchDataWithRetry(url, retries = 3) {
 
 async function myfun() {
     try {
-        // Using CORS Anywhere proxy
-        const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const targetUrl = 'https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY';
-        const data = await fetchDataWithRetry(proxyUrl + targetUrl);
+        const data = await fetchDataWithRetry(targetUrl);
         jsonData = data;
         console.log(jsonData.records.timestamp);
     } catch (error) {
