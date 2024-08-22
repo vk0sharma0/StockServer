@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 3002;
 
@@ -15,9 +16,12 @@ app.use(cors(corsOptions));
 
 let jsonData = {};  // Variable to store the fetched data
 
-// Configure axios with a timeout
+// Configure axios with a timeout and disabled SSL verification
 const axiosInstance = axios.create({
     timeout: 5000, // Timeout after 5 seconds
+    httpsAgent: new https.Agent({  
+        rejectUnauthorized: false 
+    })
 });
 
 // Function to fetch data with retries and specific headers
