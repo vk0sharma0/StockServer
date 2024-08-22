@@ -1,4 +1,3 @@
-
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -16,18 +15,37 @@ app.use(cors(corsOptions));
 
 let jsonData = {};  // Variable to store the fetched data
 
-async function myfun() {
+// Configure axios with a timeout and retry mechanism
+const axiosInstance = axios.create({
+    timeout: 5000, // Timeout after 5 seconds
+});
+
+// Function to fetch data with retries
+async function fetchDataWithRetry(url, retries = 3) {
     try {
-        const response = await axios.get(`https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY`, {
+        const response = await axiosInstance.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
             }
         });
-        jsonData = response.data;
+        return response.data;
+    } catch (error) {
+        if (retries > 0 && error.code === 'ETIMEDOUT') {
+            console.warn(`Timeout occurred. Retrying... (${retries} retries left)`);
+            return fetchDataWithRetry(url, retries - 1); // Retry
+        } else {
+            throw error; // Re-throw error if retries are exhausted or error is not a timeout
+        }
+    }
+}
 
+async function myfun() {
+    try {
+        const data = await fetchDataWithRetry('https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY');
+        jsonData = data;
         console.log(jsonData.records.timestamp);
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error.message);
     }
 }
 
