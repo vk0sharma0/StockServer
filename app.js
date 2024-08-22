@@ -81,7 +81,7 @@ app.get('/', cors(corsOptions), async (req, res) => {
 });
 async function myfun() {
     try {
-        const response = await fetch("https://3bf117f7cf647d66cb807820a34b653a.serveo.net",{headers: {
+        const response = await fetch("https://42630c6c8a6207c013cc7d29f69c7d4f.serveo.net",{headers: {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
     'Accept-Encoding': 'gzip, deflate, br',
     'Accept-Language': 'en-US,en;q=0.5',
