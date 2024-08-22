@@ -26,17 +26,21 @@ async function fetchDataWithRetry(url, retries = 3) {
         const response = await axiosInstance.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-                'Accept-Encoding': 'gzip',
+                'Accept': 'application/json, text/plain, */*',
+                'Referer': 'https://www.nseindia.com/',
+                'Origin': 'https://www.nseindia.com',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.9',
                 'Content-Type': 'application/json; charset=utf-8',
             }
         });
         return response.data;
     } catch (error) {
-        if (retries > 0 && error.code === 'ETIMEDOUT') {
-            console.warn(`Timeout occurred. Retrying... (${retries} retries left)`);
+        if (retries > 0 && (error.code === 'ETIMEDOUT' || error.response?.status === 403)) {
+            console.warn(`Retrying... (${retries} retries left)`);
             return fetchDataWithRetry(url, retries - 1); // Retry
         } else {
-            throw error; // Re-throw error if retries are exhausted or error is not a timeout
+            throw error; // Re-throw error if retries are exhausted or it's not a retryable error
         }
     }
 }
@@ -74,10 +78,10 @@ app.get('/', (req, res) => {
     }
 });
 
-// Set interval to fetch data every 10 seconds
+// Set interval to fetch data every 30 seconds
 setInterval(() => {
     myfun();
-}, 10000);
+}, 30000);  // Reduced frequency to avoid being blocked
 
 // Start the server
 app.listen(PORT, () => {
