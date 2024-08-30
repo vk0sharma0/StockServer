@@ -82,7 +82,7 @@ app.get('/', cors(corsOptions), async (req, res) => {
 });
 async function myfun() {
     try {
-        const response = await fetch("http://serveo.net:9000", {
+        const response = await fetch("http://serveo.net:7000", {
             headers: {
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
                 'Accept-Encoding': 'gzip, deflate, br',
